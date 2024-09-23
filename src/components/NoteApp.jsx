@@ -1,32 +1,21 @@
 import React from "react";
-import NoteList from "./main/NoteList";
-import { getData } from "../utils/index";
+import NoteList from "./NoteList";
+import { getInitialData } from "../utils/index";
+import NoteInput from "./NoteInput";
 
 class NoteApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            notes: getData()
+            notes: getInitialData()
         }
 
         this.onDeleteNoteHandler = this.onDeleteNoteHandler.bind(this);
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
-        this.onSearchNoteHandler = this.onSearchNoteHandler.bind(this);
-        this.onArchiveNoteHandler = this.onArchiveNoteHandler.bind(this);
     }
 
     onDeleteNoteHandler(id) {
         const notes = this.state.notes.filter(note => note.id !== id);
-        this.setState({ notes });
-    }
-
-    onArchiveNoteHandler(id) {
-        const notes = this.state.notes.filter(note => note.id !== id);
-        this.setState({ notes });
-    }
-
-    onSearchNoteHandler(title) {
-        const notes = this.state.notes.filter(note => note.title !== title);
         this.setState({ notes });
     }
 
@@ -49,12 +38,20 @@ class NoteApp extends React.Component {
     render() {
         return (
             <div className="note-app__body">
-                <h2>Buat Catatan</h2>
-                <NoteInput addNote={this.onAddNoteHandler} />
-                <h2>Catatan Aktif</h2>
-                <NoteList notes={this.state.notes} onDelete={this.onDeleteNoteHandler} />
-                <NoteList notes={this.state.notes} onArchive={this.onArchiveNoteHandler} />
-                <h2>Arsip</h2>
+                <div className="container mb-5">
+                    <h4 className="text-center">Buat Catatan</h4>
+                    <div className="row">
+                        <div className="col-md-6 mx-auto">
+                            <NoteInput addNote={this.onAddNoteHandler} />       
+                        </div>
+                    </div>
+                </div>
+                <div className="container">
+                    <h4 className="mb-3">Catatan Aktif</h4>
+                    <NoteList notes={this.state.notes} onDelete={this.onDeleteNoteHandler} />
+                    <NoteList notes={this.state.notes} onArchive={this.onArchiveNoteHandler} />
+                    <h4>Arsip</h4>
+                </div>
             </div>
         );
     }

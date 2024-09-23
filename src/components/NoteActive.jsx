@@ -1,5 +1,5 @@
 import React from "react";
-import { getData } from "../../utils/index";
+import { getData } from "../utils/index";
 
 class NotesActive extends React.Component {
     constructor(props) {

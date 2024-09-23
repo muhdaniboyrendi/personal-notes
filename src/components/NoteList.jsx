@@ -3,7 +3,7 @@ import NoteItem from "./NoteItem";
 
 function ContactIList({ notes, onDelete, onArchive }) {
     return (
-        <div className="note-list">
+        <div className="note-list row">
             {
                 notes.map((note) => (
                     <NoteItem 
