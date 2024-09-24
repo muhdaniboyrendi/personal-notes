@@ -40,9 +40,9 @@ class NoteApp extends React.Component {
                         id: +new Date(),
                         title, 
                         body, 
-                        createdAt: +new Date()
+                        createdAt: new Date().toISOString()
                     }
-                ]
+                ],
             }
         });
     }
@@ -105,13 +105,13 @@ class NoteApp extends React.Component {
                 <div className="container pb-4">
                     <h4 className="mb-3">Catatan Aktif</h4>
                     {filteredNotes.length === 0 ? (
-                        <h6 className="note-item__date card-subtitle mb-2 text-body-secondary text-center">Tidak ada catatan</h6>
+                        <h6 className="note-item__date mb-2 text-body-secondary text-center">Tidak ada catatan</h6>
                     ) : (
                         <NoteList notes={filteredNotes} onDelete={this.onDeleteNoteHandler} onArchive={this.onArchiveNoteHandler} />
                     )}
                     <h4 className="mb-3 mt-5">Arsip</h4>
                     {filteredArchivedNotes.length === 0 ? (
-                        <h6 className="note-item__date card-subtitle mb-2 text-body-secondary text-center">Tidak ada catatan</h6>
+                        <h6 className="note-item__date mb-2 text-body-secondary text-center">Tidak ada catatan</h6>
                     ) : (
                     <ArchiveList archivedNotes={filteredArchivedNotes} onDelete={this.onDeleteArchivedNoteHandler} onUnarchive={this.onUnarchiveNoteHandler} />
                     )}
