@@ -1,14 +1,14 @@
 import React from "react";
 import NoteItemBody from "./NoteItemBody";
-import NoteItemAction from "./NoteItemAction";
+import ArchiveItemAction from "./ArchiveItemAction";
 
-function NoteItem({ title, body, createdAt, id, onDelete, onArchive }) {
+function NoteItem({ title, body, createdAt, id, onDelete, onUnarchive }) {
     return (
-        <div className="note-item col-lg-3 col-md-4 col-sm-6">
+        <div className="note-item col-md-3">
             <div className="card border-light mb-4">
                 <div className="card-body">
                     <NoteItemBody title={title} createdAt={createdAt} body={body} />
-                    <NoteItemAction id={id} onDelete={onDelete} onArchive={onArchive} />
+                    <ArchiveItemAction id={id} onDelete={onDelete} onUnarchive={onUnarchive} />
                 </div>
             </div>
         </div>

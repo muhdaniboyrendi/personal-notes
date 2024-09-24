@@ -1,7 +1,7 @@
 import React from "react";
 import NoteItem from "./NoteItem";
 
-function ContactIList({ notes, onDelete, onArchive }) {
+function NoteIList({ notes, onDelete, onArchive }) {
     return (
         <div className="note-list row">
             {
@@ -19,4 +19,4 @@ function ContactIList({ notes, onDelete, onArchive }) {
     );
 }
 
-export default ContactIList;
+export default NoteIList;
