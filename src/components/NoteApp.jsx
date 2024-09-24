@@ -9,7 +9,8 @@ class NoteApp extends React.Component {
         super(props);
         this.state = {
             notes: getInitialData(),
-            archivedNotes: []
+            archivedNotes: [],
+            searchKeyword: ''
         }
 
         this.onDeleteNoteHandler = this.onDeleteNoteHandler.bind(this);
@@ -17,6 +18,7 @@ class NoteApp extends React.Component {
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
         this.onArchiveNoteHandler = this.onArchiveNoteHandler.bind(this);
         this.onUnarchiveNoteHandler = this.onUnarchiveNoteHandler.bind(this);
+        this.onSearchNoteHandler = this.onSearchNoteHandler.bind(this);
     }
 
     onDeleteNoteHandler(id) {
@@ -69,22 +71,50 @@ class NoteApp extends React.Component {
         }));
     }
 
+    onSearchNoteHandler(event) {
+        this.setState({ searchKeyword: event.target.value });
+    }
+
     render() {
+        const filteredNotes = this.state.notes.filter(note =>
+            note.title.toLowerCase().includes(this.state.searchKeyword.toLowerCase())
+        );
+
+        const filteredArchivedNotes = this.state.archivedNotes.filter(note =>
+            note.title.toLowerCase().includes(this.state.searchKeyword.toLowerCase())
+        );
+
         return (
             <div className="note-app__body">
+                <nav className="navbar bg-body-tertiary mb-4">
+                    <div className="container-fluid">
+                        <a className="navbar-brand">Notes</a>
+                        <form className="d-flex" role="search">
+                            <input className="form-control me-2" type="search" placeholder="Cari Catatan..." aria-label="Search" value={this.state.searchKeyword} onChange={this.onSearchNoteHandler}  />
+                        </form>
+                    </div>
+                </nav>
                 <div className="container mb-5">
-                    <h4 className="text-center">Buat Catatan</h4>
                     <div className="row">
-                        <div className="col-md-6 mx-auto">
+                        <div className="col-lg-6 col-md-8 mx-auto">
+                            <h4>Buat Catatan</h4>
                             <NoteInput addNote={this.onAddNoteHandler} />       
                         </div>
                     </div>
                 </div>
-                <div className="container">
+                <div className="container pb-4">
                     <h4 className="mb-3">Catatan Aktif</h4>
-                    <NoteList notes={this.state.notes} onDelete={this.onDeleteNoteHandler} onArchive={this.onArchiveNoteHandler} />
-                    <h4 className="mb-3 mt-4">Arsip</h4>
-                    <ArchiveList archivedNotes={this.state.archivedNotes} onDelete={this.onDeleteArchivedNoteHandler} onUnarchive={this.onUnarchiveNoteHandler} />
+                    {filteredNotes.length === 0 ? (
+                        <h6 className="note-item__date card-subtitle mb-2 text-body-secondary text-center">Tidak ada catatan</h6>
+                    ) : (
+                        <NoteList notes={filteredNotes} onDelete={this.onDeleteNoteHandler} onArchive={this.onArchiveNoteHandler} />
+                    )}
+                    <h4 className="mb-3 mt-5">Arsip</h4>
+                    {filteredArchivedNotes.length === 0 ? (
+                        <h6 className="note-item__date card-subtitle mb-2 text-body-secondary text-center">Tidak ada catatan</h6>
+                    ) : (
+                    <ArchiveList archivedNotes={filteredArchivedNotes} onDelete={this.onDeleteArchivedNoteHandler} onUnarchive={this.onUnarchiveNoteHandler} />
+                    )}
                 </div>
             </div>
         );
